@@ -1,7 +1,5 @@
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.BitSet;
-import java.util.List;
 
 public class Trivium {
 
@@ -19,12 +17,14 @@ public class Trivium {
 		this.key.set(40);
 		this.key.set(77);
 		this.key.set(78);
-		this.key.set(79); //XXX Basicamente la clave tiene tres "1" al principio, tres al final y uno al medio
+		this.key.set(79); // XXX Basicamente la clave tiene tres "1" al
+							// principio, tres al final y uno al medio
 		this.iv.set(0);
 		this.iv.set(39);
 		this.iv.set(40);
 		this.iv.set(41);
-		this.iv.set(79); //XXX El vector de inicializacion tiene tres "1" en el medio, uno al principio y otro al final
+		this.iv.set(79); // XXX El vector de inicializacion tiene tres "1" en el
+							// medio, uno al principio y otro al final
 
 		inicializarTrivium();
 	}
@@ -76,24 +76,26 @@ public class Trivium {
 
 	// FASE 2: KEYSTREAM GENERATION
 	public BitSet keystream(int i) {
-		BitSet z = new BitSet(i) ;
-		for(int x = 0; x <= i; x++){
-		t1 = (boolean) (registro1.get(65) ^ registro1.get(92));
-		t2 = (boolean) (registro2.get(68) ^ registro2.get(83));
-		t3 = (boolean) (registro3.get(65) ^ registro3.get(110));
-		if(t1 ^ t2 ^ t3){z.set(x);}
-		t1 = (boolean) (t1 ^ registro1.get(90) ^ registro1.get(91) ^ registro2
-				.get(77));
-		t2 = (boolean) (t2 ^ registro2.get(81) ^ registro2.get(82) ^ registro3
-				.get(86));
-		t3 = (boolean) (t3 ^ registro3.get(108) ^ registro3.get(109) ^ registro1
-				.get(68));
-		registro1.remove(92);
-		registro1.add(0, t3);
-		registro2.remove(83);
-		registro2.add(0, t1);
-		registro3.remove(110);
-		registro3.add(0, t2);
+		BitSet z = new BitSet(i);
+		for (int x = 0; x <= i; x++) {
+			t1 = (boolean) (registro1.get(65) ^ registro1.get(92));
+			t2 = (boolean) (registro2.get(68) ^ registro2.get(83));
+			t3 = (boolean) (registro3.get(65) ^ registro3.get(110));
+			if (t1 ^ t2 ^ t3) {
+				z.set(x);
+			}
+			t1 = (boolean) (t1 ^ registro1.get(90) ^ registro1.get(91) ^ registro2
+					.get(77));
+			t2 = (boolean) (t2 ^ registro2.get(81) ^ registro2.get(82) ^ registro3
+					.get(86));
+			t3 = (boolean) (t3 ^ registro3.get(108) ^ registro3.get(109) ^ registro1
+					.get(68));
+			registro1.remove(92);
+			registro1.add(0, t3);
+			registro2.remove(83);
+			registro2.add(0, t1);
+			registro3.remove(110);
+			registro3.add(0, t2);
 		}
 		return z;
 	}
